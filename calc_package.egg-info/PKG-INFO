@@ -5,4 +5,4 @@ Summary: Interactive calculus visualizations for teaching
 Requires-Python: >=3.10
 Requires-Dist: numpy
 Requires-Dist: matplotlib
-Requires-Dist: ipywidgets
+Requires-Dist: pytest

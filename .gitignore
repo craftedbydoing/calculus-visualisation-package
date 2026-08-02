@@ -46,6 +46,10 @@ htmlcov/
 nosetests.xml
 coverage.xml
 *.cover
+*.egg-info/
+.eggs/
+build/
+dist/
 
 # Type checkers / linters
 .mypy_cache/
