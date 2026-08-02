@@ -1,0 +1,4 @@
+calc_package
+notebooks
+tests
+venv
