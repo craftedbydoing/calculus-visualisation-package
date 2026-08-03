@@ -51,3 +51,33 @@ def sample_clean(
     x, y = sample_raw(f, domain, num_points)
     y = mask_discontinuities(y, factor)
     return x, y
+
+def find_delta_for_limit(x: np.ndarray, y: np.ndarray, a: float, L: float, eps: float) -> float:
+    """For a given function's limit, a value and epsilon computes sufficient delta
+
+    Args:
+        x (np.ndarray): sampled x's for our function
+        y (np.ndarray): sampled y's for our function
+        a (float): value we are approaching with x
+        L (float): limit value
+        eps (float): epsilon value
+
+    Returns:
+        delta: delta from eps-delta def of a limit
+
+    """
+    inside_mask = np.abs(y - L) < eps
+    outside_idx = np.where(~inside_mask)[0] # indexes outside, output (smth, )
+
+    if len(outside_idx) == 0:
+        return 1 # all elements inside band -> set delta to be 1 as a default
+    if len(outside_idx) == len(y): # no evidence sequence converges yet
+        return None
+
+    x_idxs_right_of_a = np.where(x > a)[0]
+    x_idxs_left_of_a = np.where(x < a)[0]
+    del_right_idx = np.min(np.intersect1d(x_idxs_right_of_a, outside_idx))
+    del_left_idx = np.max(np.intersect1d(x_idxs_left_of_a, outside_idx))
+    delta = min(abs(x[del_left_idx] - a), abs(x[del_right_idx] - a))
+
+    return delta
