@@ -72,7 +72,7 @@ def find_delta_for_limit(x: np.ndarray, y: np.ndarray, a: float, L: float, eps: 
     if len(outside_idx) == 0:
         return 1 # all elements inside band -> set delta to be 1 as a default
     if len(outside_idx) == len(y): # doesnt make really sense
-        raise NotImplementedError("All points are outside of the band??")
+        return  0
 
     x_idxs_right_of_a = np.where(x > a)[0]
     x_idxs_left_of_a = np.where(x < a)[0]
