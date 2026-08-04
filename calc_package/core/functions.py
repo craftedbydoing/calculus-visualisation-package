@@ -71,13 +71,24 @@ def find_delta_for_limit(x: np.ndarray, y: np.ndarray, a: float, L: float, eps: 
 
     if len(outside_idx) == 0:
         return 1 # all elements inside band -> set delta to be 1 as a default
-    if len(outside_idx) == len(y): # no evidence sequence converges yet
-        return None
+    if len(outside_idx) == len(y): # doesnt make really sense
+        raise NotImplementedError("All points are outside of the band??")
 
     x_idxs_right_of_a = np.where(x > a)[0]
     x_idxs_left_of_a = np.where(x < a)[0]
-    del_right_idx = np.min(np.intersect1d(x_idxs_right_of_a, outside_idx))
-    del_left_idx = np.max(np.intersect1d(x_idxs_left_of_a, outside_idx))
-    delta = min(abs(x[del_left_idx] - a), abs(x[del_right_idx] - a))
+
+    right_outside = np.intersect1d(x_idxs_right_of_a, outside_idx)
+    if len(right_outside) == 0: # whole right side inside epsilon band
+        delta_right = np.inf
+    else:
+        delta_right = abs(x[np.min(right_outside)] - a)
+
+    left_outside = np.intersect1d(x_idxs_left_of_a, outside_idx)
+    if len(left_outside) == 0: # whole left side inside epsilon band
+        delta_left = np.inf
+    else:
+        delta_left = abs(x[np.max(left_outside)] - a)
+
+    delta = min(delta_left, delta_right)
 
     return delta
