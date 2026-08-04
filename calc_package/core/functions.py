@@ -92,3 +92,8 @@ def find_delta_for_limit(x: np.ndarray, y: np.ndarray, a: float, L: float, eps: 
     delta = min(delta_left, delta_right)
 
     return delta
+
+
+
+
+

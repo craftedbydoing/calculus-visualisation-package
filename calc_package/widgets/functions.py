@@ -1,8 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from ipywidgets import interact, FloatRangeSlider, IntSlider
-from calc_package.core.functions import sample_clean
-from calc_package.plotting.functions import plot_function
+from ipywidgets import interact, FloatRangeSlider, IntSlider, FloatSlider
+from calc_package.core.functions import sample_clean, find_delta_for_limit
+from calc_package.plotting.functions import plot_function, plot_epsilon_delta
 
 def function_explorer():
     functions = {
@@ -28,4 +28,45 @@ def function_explorer():
         func_names=list(functions.keys()),
         domain=FloatRangeSlider(value=(-5, 5), min=-20, max=20, step=0.5),
         num_points=IntSlider(value=500, min=3, max=1000, step=1)
+    )
+
+def epsilon_delta_explorer():
+    EPS_MAX = 1.0
+    functions = {
+        "sin(x)/x" : {"f" : lambda x: np.sin(x)/x,
+                      "a" : 0,
+                      "L" : 1,
+                      "hole_x" : 0},
+        # "2/(3-x)" : {"f" : lambda x: 2/(3-x),
+        #             "L" : 3}
+    }
+    fig, ax = plt.subplots(figsize=(6,6))
+
+    def show(func_name, eps, domain):
+        entry = functions[func_name]
+        L = entry["L"]
+        a = entry["a"]
+        x, y = sample_clean(entry["f"], domain)
+        delta = find_delta_for_limit(x, y, a, L, eps)
+
+        # a_max = np.max(a)
+        # a_min = np.min(a)
+        # y_max = np.max([a_max, L + EPS_MAX])
+        # y_min = np.min([a_min, L - EPS_MAX])
+
+        # if (y_max - y_min) < 0.5:
+        #     pad = 1
+        # else:
+        #     pad = (y_max - y_min) * 0.1
+        # ylim = (y_min - pad, y_max + pad)
+
+        ax.clear()
+        plot_epsilon_delta(ax, x, y, a, L, eps, delta, entry["hole_x"])
+        fig.canvas.draw_idle()
+
+    interact(
+        show,
+        func_name = list(functions.keys()),
+        eps = FloatSlider(value=0.5, min=0.01, max=EPS_MAX, step=0.01),
+        domain=FloatRangeSlider(value=(-5, 5), min=-20, max=20, step=0.5),
     )

@@ -1,7 +1,5 @@
 ### Necessities
-Fix find_delta function w.r.t the limit definition: it should not take into account the point "a" itself.
-
-
+Expand: plot/widget eps_delta_explorer, what if L "DNE"? 
 
 
 
