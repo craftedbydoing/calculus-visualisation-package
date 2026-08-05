@@ -31,7 +31,7 @@ def function_explorer():
     )
 
 def epsilon_delta_explorer():
-    EPS_MAX = 1.0
+    EPS_MAX = 1
     functions = {
         "sin(x)/x" : {"f" : lambda x: np.sin(x)/x,
                       "a" : 0,
@@ -42,31 +42,23 @@ def epsilon_delta_explorer():
     }
     fig, ax = plt.subplots(figsize=(6,6))
 
-    def show(func_name, eps, domain):
+    def show(func_name, eps, radius):
         entry = functions[func_name]
         L = entry["L"]
         a = entry["a"]
+        domain = (a - radius, a + radius)
         x, y = sample_clean(entry["f"], domain)
         delta = find_delta_for_limit(x, y, a, L, eps)
-
-        # a_max = np.max(a)
-        # a_min = np.min(a)
-        # y_max = np.max([a_max, L + EPS_MAX])
-        # y_min = np.min([a_min, L - EPS_MAX])
-
-        # if (y_max - y_min) < 0.5:
-        #     pad = 1
-        # else:
-        #     pad = (y_max - y_min) * 0.1
-        # ylim = (y_min - pad, y_max + pad)
+    
+        ylim = (L - EPS_MAX*1.2, L + EPS_MAX*1.2)
 
         ax.clear()
-        plot_epsilon_delta(ax, x, y, a, L, eps, delta, entry["hole_x"])
+        plot_epsilon_delta(ax, x, y, a, L, eps, delta, entry["hole_x"], ylim=ylim)
         fig.canvas.draw_idle()
 
     interact(
         show,
         func_name = list(functions.keys()),
-        eps = FloatSlider(value=0.5, min=0.01, max=EPS_MAX, step=0.01),
-        domain=FloatRangeSlider(value=(-5, 5), min=-20, max=20, step=0.5),
+        eps = FloatSlider(value=0.3, min=0.01, max=EPS_MAX, step=0.01),
+        radius=FloatSlider(value=3, min=0.1, max=10, step=0.1),
     )
