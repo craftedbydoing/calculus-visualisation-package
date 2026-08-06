@@ -1,8 +1,9 @@
-import numpy as np
 import matplotlib.pyplot as plt
-from ipywidgets import interact, FloatRangeSlider, IntSlider, FloatSlider
-from calc_package.core.functions import sample_clean, find_delta_for_limit
-from calc_package.plotting.functions import plot_function, plot_epsilon_delta
+import numpy as np
+from ipywidgets import FloatRangeSlider, FloatSlider, IntSlider, interact
+
+from calc_package.core.functions import find_delta_for_limit, sample_clean
+from calc_package.plotting.functions import plot_epsilon_delta, plot_function
 
 
 def function_explorer():
