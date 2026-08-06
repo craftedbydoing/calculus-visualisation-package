@@ -1,19 +1,20 @@
-from calc_package.core.sequences import sample_sequence, find_N_for_limit
-from calc_package.plotting.sequences import plot_convergence
 import matplotlib.pyplot as plt
-from ipywidgets import interact, FloatSlider, IntSlider
 import numpy as np
+from ipywidgets import FloatSlider, IntSlider, interact
+
+from calc_package.core.sequences import find_N_for_limit, sample_sequence
+from calc_package.plotting.sequences import plot_convergence
 
 
 def sequence_convergence_explorer():
     EPS_MAX = 1.0
     sequences = {
-        "1/n" : {"f" : lambda n: 1/n,
-                 "L" : 0},
-        "3-1/n" : {"f" : lambda n: 3-1/n,
-                   "L" : 3}
+        "1/n": {"f": lambda n: 1/n,
+                "L": 0},
+        "3-1/n": {"f": lambda n: 3-1/n,
+                  "L": 3}
     }
-    fig, ax = plt.subplots(figsize=(6,6))
+    fig, ax = plt.subplots(figsize=(6, 6))
 
     def show(seq_name, eps, n_terms):
         entry = sequences[seq_name]
@@ -38,7 +39,7 @@ def sequence_convergence_explorer():
 
     interact(
         show,
-        seq_name = list(sequences.keys()),
-        eps = FloatSlider(value=0.5, min=0.01, max=EPS_MAX, step=0.01),
-        n_terms = IntSlider(value=10, min=1, max=70, step=1)
+        seq_name=list(sequences.keys()),
+        eps=FloatSlider(value=0.5, min=0.01, max=EPS_MAX, step=0.01),
+        n_terms=IntSlider(value=10, min=1, max=70, step=1)
     )

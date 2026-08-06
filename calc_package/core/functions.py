@@ -1,13 +1,15 @@
-import numpy as np
 from collections.abc import Callable
+
+import numpy as np
+
 
 def sample_raw(
         f: Callable[[np.ndarray], np.ndarray],
         domain: tuple[float, float],
         num_points: int = 500
-        ) -> tuple[np.ndarray, np.ndarray]:
+) -> tuple[np.ndarray, np.ndarray]:
     """For a function on a given domain samples x and y (raw) values.
-    
+
     Returns:
         x, y: arrays of sampled values both for x and y
     """
@@ -15,6 +17,7 @@ def sample_raw(
     x = np.linspace(a, b, num_points)
     y = f(x)
     return x, y
+
 
 def mask_discontinuities(y: np.ndarray, factor: float = 50) -> np.ndarray:
     """Filters the y values around discontinuities and rewrites them to 
@@ -28,7 +31,7 @@ def mask_discontinuities(y: np.ndarray, factor: float = 50) -> np.ndarray:
     """
     d = np.abs(np.diff(y))
     med = np.median(d)
-    if med == 0: # constant function
+    if med == 0:  # constant function
         return y.copy()
     bad_values = d > med*factor
 
@@ -37,20 +40,22 @@ def mask_discontinuities(y: np.ndarray, factor: float = 50) -> np.ndarray:
 
     return y_clean
 
+
 def sample_clean(
         f: Callable[[np.ndarray], np.ndarray],
         domain: tuple[float, float],
         num_points: int = 500,
         factor: float = 50
-        ) -> tuple[np.ndarray, np.ndarray]:
+) -> tuple[np.ndarray, np.ndarray]:
     """For a function on a given domain samples x and y (cleaned) values.
-    
+
     Returns:
         x, y: arrays of sampled values both for x and y
     """
     x, y = sample_raw(f, domain, num_points)
     y = mask_discontinuities(y, factor)
     return x, y
+
 
 def find_delta_for_limit(x: np.ndarray, y: np.ndarray, a: float, L: float, eps: float) -> float:
     """For a given function's limit, a value and epsilon computes sufficient delta
@@ -67,24 +72,24 @@ def find_delta_for_limit(x: np.ndarray, y: np.ndarray, a: float, L: float, eps: 
 
     """
     inside_mask = np.abs(y - L) < eps
-    outside_idx = np.where(~inside_mask)[0] # indexes outside, output (smth, )
+    outside_idx = np.where(~inside_mask)[0]  # indexes outside, output (smth, )
 
     if len(outside_idx) == 0:
-        return 1 # all elements inside band -> set delta to be 1 as a default
-    if len(outside_idx) == len(y): # doesnt make really sense
-        return  0
+        return 1  # all elements inside band -> set delta to be 1 as a default
+    if len(outside_idx) == len(y):  # doesnt make really sense
+        return 0
 
     x_idxs_right_of_a = np.where(x > a)[0]
     x_idxs_left_of_a = np.where(x < a)[0]
 
     right_outside = np.intersect1d(x_idxs_right_of_a, outside_idx)
-    if len(right_outside) == 0: # whole right side inside epsilon band
+    if len(right_outside) == 0:  # whole right side inside epsilon band
         delta_right = np.inf
     else:
         delta_right = abs(x[np.min(right_outside)] - a)
 
     left_outside = np.intersect1d(x_idxs_left_of_a, outside_idx)
-    if len(left_outside) == 0: # whole left side inside epsilon band
+    if len(left_outside) == 0:  # whole left side inside epsilon band
         delta_left = np.inf
     else:
         delta_left = abs(x[np.max(left_outside)] - a)
@@ -92,8 +97,3 @@ def find_delta_for_limit(x: np.ndarray, y: np.ndarray, a: float, L: float, eps: 
     delta = min(delta_left, delta_right)
 
     return delta
-
-
-
-
-

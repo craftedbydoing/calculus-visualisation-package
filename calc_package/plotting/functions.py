@@ -1,7 +1,8 @@
-import numpy as np
+
 
 def plot_function(ax, x, y):
     ax.plot(x, y)
+
 
 def plot_epsilon_delta(ax, x, y, a, L, eps, delta, hole_x=None, ylim=None):
 
