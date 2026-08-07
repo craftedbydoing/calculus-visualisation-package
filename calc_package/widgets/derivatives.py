@@ -36,13 +36,15 @@ def derivative_visualiser():
         sec_vals = get_secant_values(f, x, a, sec_slope)
 
         ax.clear()
-        y_min = np.min(f_vals*0.8)
-        y_max = np.max(f_vals*1.2)
+        y_min = np.min(f_vals-0.5)
+        y_max = np.max(f_vals+0.5)
 
         ax.set_xlim(domain[0], domain[1])
         ax.set_ylim(y_min, y_max)
         plot_function(ax, x, f_vals)
         plot_function(ax, x, sec_vals)
+        ax.scatter(a, f(a), c="steelblue")
+        ax.scatter(a+h, f(a+h), c="steelblue")
 
         numeric_derivative = derivative_at_point(f, a)
         ax.set_title(
