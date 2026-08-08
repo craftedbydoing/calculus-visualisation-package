@@ -1,6 +1,5 @@
 
-def derivative_at_point(f, a):
-    h = 1e-3
+def derivative_at_point(f, a, h=1e-3):
     return (f(a+h)-f(a-h))/(2*h)
 
 
