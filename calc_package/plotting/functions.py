@@ -1,7 +1,7 @@
 
 
-def plot_function(ax, x, y):
-    ax.plot(x, y)
+def plot_function(ax, x, y, label=None):
+    ax.plot(x, y, label=label)
 
 
 def plot_epsilon_delta(ax, x, y, a, L, eps, delta, hole_x=None, ylim=None):

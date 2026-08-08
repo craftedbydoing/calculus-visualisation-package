@@ -3,12 +3,12 @@ import numpy as np
 from ipywidgets import FloatSlider, interact
 
 from calc_package.core.derivatives import (
-    calculate_slope_secant,
+    calculate_line_slope,
     derivative_at_point,
-    get_secant_values,
+    line_through_point,
 )
 from calc_package.core.functions import sample_clean
-from calc_package.plotting.functions import plot_function
+from calc_package.plotting.derivatives import plot_secant_to_tangent
 
 
 def derivative_visualiser():
@@ -17,14 +17,14 @@ def derivative_visualiser():
               "a": 2},
         "x^2": {"f": lambda x: x**2,
                 "a": -3},
-        "1/x": {"f": lambda x: 1/x,
-                "a": 1},
-        "tan(x)": {"f": lambda x: np.tan(x),
+        "e^x": {"f": lambda x: np.exp(x),
+                "a": 0},
+        "sin(x)": {"f": lambda x: np.sin(x),
                    "a": 0}
     }
     h_MAX = 5
 
-    fig, ax = plt.subplots(figsize=(6, 6))
+    fig, ax = plt.subplots(figsize=(5, 3))
 
     def show(func_name, h):
         entry = functions[func_name]
@@ -32,21 +32,20 @@ def derivative_visualiser():
         a = entry["a"]
         domain = (a-1.5, a+h_MAX+1)
         x, f_vals = sample_clean(f, domain=domain)
-        sec_slope = calculate_slope_secant(f, a, h)
-        sec_vals = get_secant_values(f, x, a, sec_slope)
+        sec_slope = calculate_line_slope(f, a, h)
+        sec_vals = line_through_point(x, a, f(a), sec_slope)
+        numeric_derivative = derivative_at_point(f, a)
+        tan_vals = line_through_point(x, a, f(a), numeric_derivative)
 
         ax.clear()
-        y_min = np.min(f_vals-0.5)
-        y_max = np.max(f_vals+0.5)
+        y_min = np.nanmin(f_vals-0.5)
+        y_max = np.nanmax(f_vals+0.5)
+        ylim = (y_min, y_max)
 
-        ax.set_xlim(domain[0], domain[1])
-        ax.set_ylim(y_min, y_max)
-        plot_function(ax, x, f_vals)
-        plot_function(ax, x, sec_vals)
-        ax.scatter(a, f(a), c="steelblue")
-        ax.scatter(a+h, f(a+h), c="steelblue")
+        plot_secant_to_tangent(ax, x, f_vals, sec_vals, tan_vals,
+                               point_a=(a, f(a)), point_h=(a+h, f(a+h)), ylim=ylim)
 
-        numeric_derivative = derivative_at_point(f, a)
+        ax.legend()
         ax.set_title(
             f"$a = {a}$, $f'(a) = {numeric_derivative:.02f}$, secant slope = {sec_slope:.02f}")
         fig.canvas.draw_idle()  # "redraw command"
