@@ -15,7 +15,7 @@ def taylor_values(x, a, deriv, n):
         array values of T_n(x)
     """
 
-    result = np.zeros_like(x)
+    result = np.zeros_like(x, dtype=float)
     for k in range(n+1):
         result += (deriv(k, a)) * (1/math.factorial(k)) * ((x - a)**k)
 
