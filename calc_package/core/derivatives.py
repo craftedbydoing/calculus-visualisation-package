@@ -19,6 +19,8 @@ def one_sided_slopes(f, a, h):
     return left, right
 
 
-def derivative_exists(f, a, h=1e-3, tol=1e-6):
+def derivative_exists(f, a, h=1e-3, tol=None):
+    if tol is None:
+        tol = 10 * h
     left, right = one_sided_slopes(f, a, h)
     return np.isclose(left, right, atol=tol)

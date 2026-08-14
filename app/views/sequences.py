@@ -30,4 +30,7 @@ ylim = (y_min - pad, y_max + pad)
 
 # --- plotting ---
 fig = plot_convergence_plotly(n, a, L, eps, N, ylim)
+
+st.markdown(rf"Nepřítel zvolil :red-background[**$\varepsilon$ = {eps:.2f}**]. "
+            rf"Stačí volit :green-background[**$N = {N}$**].")
 st.plotly_chart(fig)
