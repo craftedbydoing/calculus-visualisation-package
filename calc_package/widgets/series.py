@@ -20,7 +20,7 @@ def taylor_explorer():
                     "deriv": lambda k, a: m.factorial(k) / (1-a)**(k+1),
                     "a": 0},
         "x^2": {"f": lambda x: x**2,
-                "deriv": lambda k, a: (2*a if k==0 else (2*a if k==1 else (2 if k==2 else 0))),
+                "deriv": lambda k, a: (2*a if k == 0 else (2*a if k == 1 else (2 if k == 2 else 0))),
                 "a": 0}
     }
     fig, ax = plt.subplots(figsize=(6, 5))
@@ -30,7 +30,7 @@ def taylor_explorer():
         f = entry["f"]
         deriv = entry["deriv"]
         a = entry["a"]
-        domain = (a-radius,a+radius)
+        domain = (a-radius, a+radius)
 
         x, y = sample_clean(f, domain)
         taylor_vals = taylor_values(x, a, deriv, n)

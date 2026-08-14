@@ -1,0 +1,3 @@
+[server]
+folderWatchList = ["calc_package/core", "calc_package/plotting"]
+runOnSave = true
