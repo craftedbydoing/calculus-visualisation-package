@@ -8,7 +8,8 @@ EPS_MAX = 1.0
 sequences = {
     "1/n": {"f": lambda n: 1/n, "L": 0},
     "3-1/n": {"f": lambda n: 3-1/n, "L": 3},
-    "2^x": {"f": lambda n: 2**n, "L": "inf"}
+    "2^n": {"f": lambda n: 2**n, "L": "inf"},
+    "sin(n)": {"f": lambda n: np.sin(n), "L": "DNE"},
 }
 # --- controls ---
 with st.sidebar:
