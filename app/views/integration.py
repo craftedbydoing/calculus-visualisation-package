@@ -10,27 +10,37 @@ functions = {
             "domain": (0, 3)},
     "sin(x)": {"f": lambda x: np.sin(x),
                "domain": (0, np.pi)},
+    "1/x^2": {"f": lambda x: 1/(x**2),
+              "domain": (0.5, 5)},
 }
 with st.sidebar:
     func_name = st.selectbox("Function", list(functions.keys()))
-    n = st.slider("#rectangles", value=4, min_value=1, max_value=100, step=1)
+    n = st.slider("#rectangles", value=4, min_value=1, max_value=300, step=1)
     method = st.selectbox(
         "Method", ["lower", "upper", "midpoint", "left", "right"])
 entry = functions[func_name]
 f = entry["f"]
 a, b = entry["domain"]
-x, f_vals = sample_clean(f, (a, b))
-edges, heights, width, sumation = riemann_sum(f, a, b, n, method)
+x, f_vals = sample_clean(f, (a, b), num_points=1000, factor=200)
+edges, heights, width, summation = riemann_sum(f, a, b, n, method)
 
-fig = plot_riemann(x, f_vals, edges[:-1], heights, width)
-st.markdown(f"Summation of $N={n}$ terms: {sumation:.04f}")
+fig = plot_riemann(x, f_vals, edges, heights, width)
+st.markdown(f"Sum of $n={n}$ rectangles: {summation:.04f}")
 st.plotly_chart(fig)
 
 st.header("Riemann integrability condition")
-_, lower_h, width, lower_sum = riemann_sum(f, a, b, n, "lower")
-edges, upper_h, _, upper_sum = riemann_sum(f, a, b, n, "upper")
+edges_low, lower_h, width_low, lower_sum = riemann_sum(f, a, b, n, "lower")
+edges_up, upper_h, width_up, upper_sum = riemann_sum(f, a, b, n, "upper")
+gap = upper_sum-lower_sum
 
-fig2 = plot_riemann_sandwich(x, f_vals, edges[:-1], lower_h, upper_h, width)
+eps = st.slider("Epsilon", value=2.0, min_value=0.1, max_value=3.0, step=0.1)
+if gap < eps:
+    st.success(f"U − L = {gap:.4f} < ε = {eps}. We won! :)")
+else:
+    st.warning("We are losing rn :(")
+
+fig2 = plot_riemann_sandwich(
+    x, f_vals, edges, lower_h, upper_h, width_low)
 st.markdown(f"lower sum = {lower_sum:.3f},  upper sum = {upper_sum:.3f},  "
-            f"gap = {upper_sum - lower_sum:.3f}")
-st.plotly_chart(fig2)
+            f"gap = {gap:.3f}")
+st.plotly_chart(fig2, use_container_width=False)

@@ -26,6 +26,9 @@ x, y = sample_clean(entry["f"], domain)
 delta = find_delta_for_limit(x, y, a, L, eps)
 ylim = (L - EPS_MAX*1.2, L + EPS_MAX*1.2)
 
+st.markdown(r"""
+    $\forall\varepsilon > 0 \quad \exists\delta > 0: \quad f(x)\in (L-\varepsilon, L+\varepsilon), \quad \forall x\in(a-\delta, a+\delta)$
+    """)
 st.markdown(rf"Nepřítel zvolil :red-background[**$\varepsilon$ = {eps:.2f}**]. "
             rf"Stačí volit :green-background[**$\delta = {delta:.2f}$**].")
 fig = plot_epsilon_delta(x, y, a, L, eps, delta,

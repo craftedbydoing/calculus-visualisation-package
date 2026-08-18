@@ -33,6 +33,9 @@ def find_N_for_limit(n: np.ndarray, a: np.ndarray, L: float, eps: float) -> int:
         int: index from which onwards sequence stays in epsilon band
 
     """
+    if L == "inf" or L == "-inf":
+        return None
+
     inside_mask = np.abs(a - L) < eps
     outside_idx = np.where(~inside_mask)[0]  # indexes outside, output (smth, )
 

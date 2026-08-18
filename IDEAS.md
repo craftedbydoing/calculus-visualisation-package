@@ -1,20 +1,18 @@
 ## Necessities
 
-Expand: plot/widget eps_delta_explorer, what if L "DNE"?
-
 ## IDEAS
+
+Divide nav panel more granular. e.g. Functions: plot, eps-delta def., continuity, eps-delta GAME,...; sequences: plot, eps-N def, eps-N GAME,
+Add pages: non-examples of continuity, etc
 
 Add "catalog" of functions that are used in different modules. That way I'll not have to define so much of them separately for each module.
 OR
 Add SymPy functionality to parse user's input function -> more complicated.
 
-### Streamlit
+Add: Let's play a game mode: student chooses epsilon and PC gives him the N, delta, whatever.
 
-Divide topics into "subpages" or "tabs" for different widgets
-Focus on a graphics side of things a little bit.
+Focus on graphics more later - for convinient usage of students.
 
 ### Seq. module
-
-Add also widget slider function for just sequence, slider for n_terms, without eps band.
 
 ### Func. module
