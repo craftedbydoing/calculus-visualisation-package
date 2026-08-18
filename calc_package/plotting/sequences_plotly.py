@@ -3,7 +3,6 @@ import plotly.graph_objects as go
 
 def plot_sequence(n, a, ylim=None):
     fig = go.Figure()
-
     fig.add_scatter(x=n, y=a, mode="markers", name="a_n",
                     marker={"size": 8, "opacity": 0.8,
                             "line": {"width": 1, "color": "darkblue"}})

@@ -1,6 +1,7 @@
 ## Necessities
 
 Get rid of pycache commits to git
+Get streamlit to update when I change a calc_pack file
 
 ## IDEAS
 

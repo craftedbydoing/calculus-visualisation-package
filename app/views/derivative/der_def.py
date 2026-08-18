@@ -11,19 +11,10 @@ from calc_package.core.derivatives import (
 from calc_package.core.functions import sample_clean
 from calc_package.plotting.derivatives_plotly import plot_secant_to_tangent
 from calc_package.plotting.functions_plotly import plot_function
+from calc_package.catalog import DERIVATIVES
 
-functions = {
-    "3": {"f": lambda x: 3 + 0*x,
-          "a": 2},
-    "x^2": {"f": lambda x: x**2,
-            "a": -3},
-    "e^x": {"f": lambda x: np.exp(x),
-            "a": 0},
-    "sin(x)": {"f": lambda x: np.sin(x),
-               "a": 0},
-    "|x|": {"f": lambda x: np.abs(x),
-            "a": 0},
-}
+functions = DERIVATIVES
+
 h_MAX = 5.0
 with st.sidebar:
     func_name = st.selectbox("Funkce", list(functions.keys()))

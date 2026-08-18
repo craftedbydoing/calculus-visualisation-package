@@ -4,15 +4,9 @@ import streamlit as st
 from calc_package.core.functions import sample_clean
 from calc_package.core.integration import riemann_sum
 from calc_package.plotting.integration_plotly import plot_riemann, plot_riemann_sandwich
+from calc_package.catalog import INTEGRATION
 
-functions = {
-    "e^x": {"f": lambda x: np.exp(x),
-            "domain": (0, 3)},
-    "sin(x)": {"f": lambda x: np.sin(x),
-               "domain": (0, np.pi)},
-    "1/x^2": {"f": lambda x: 1/(x**2),
-              "domain": (0.5, 5)},
-}
+functions = INTEGRATION
 with st.sidebar:
     func_name = st.selectbox("Function", list(functions.keys()))
     n = st.slider("#rectangles", value=4, min_value=1, max_value=300, step=1)

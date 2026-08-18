@@ -1,10 +1,7 @@
 [server]
 runOnSave = true
-folderWatchList = ["calc_package/core"]
+fileWatcherType = "auto"
+folderWatchList = ['C:\Users\novot\Documents\Python_projects\own\calculus\calc_package']
 
 [theme]
-primaryColor = "#C2662D"
-backgroundColor = "#FAF7F2"
-secondaryBackgroundColor = "#EDE4D8"
-textColor = "#3D362F"
 font = "serif"

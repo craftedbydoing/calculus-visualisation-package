@@ -6,13 +6,9 @@ import streamlit as st
 from calc_package.core.functions import sample_clean
 from calc_package.core.series import taylor_values
 from calc_package.plotting.series_plotly import taylor_plotly
+from calc_package.catalog import TAYLOR
 
-functions = {
-    "e^x": {"f": lambda x: np.exp(x), "deriv": lambda k, a: np.exp(a), "a": 0},
-    "sin(x)": {"f": lambda x: np.sin(x), "deriv": lambda k, a: np.sin(a + k*np.pi/2), "a": 0},
-    "1/(1-x)": {"f": lambda x: 1/(1-x), "deriv": lambda k, a: m.factorial(k) / (1-a)**(k+1), "a": 0},
-    "x^2": {"f": lambda x: x**2, "deriv": lambda k, a: (a**2 if k == 0 else (2*a if k == 1 else (2 if k == 2 else 0))), "a": 0}
-}
+functions = TAYLOR
 with st.sidebar:
     func_name = st.selectbox("Funkce", list(functions.keys()))
     radius = st.slider(label="Domain radius", value=2.0,

@@ -3,21 +3,17 @@ import streamlit as st
 
 from calc_package.core.sequences import find_N_for_limit, sample_sequence
 from calc_package.plotting.sequences_plotly import plot_convergence_plotly, plot_sequence
+from calc_package.catalog import SEQUENCES
 
 EPS_MAX = 1.0
-sequences = {
-    "1/n": {"f": lambda n: 1/n, "L": 0},
-    "3-1/n": {"f": lambda n: 3-1/n, "L": 3},
-    "2^n": {"f": lambda n: 2**n, "L": "inf"},
-    "sin(n)": {"f": lambda n: np.sin(n), "L": "DNE"},
-}
+sequences = SEQUENCES
 # --- controls ---
 with st.sidebar:
     seq_name = st.selectbox("Posloupnosti", list(sequences.keys()))
     eps = st.slider(r"$\varepsilon$", min_value=0.01,
                     max_value=EPS_MAX, value=0.5, step=0.01)
     n_terms = st.slider("Počet členů", min_value=1,
-                        max_value=70, value=3, step=1)
+                        max_value=70, value=20, step=1)
 
 # --- core ---
 entry = sequences[seq_name]
@@ -38,7 +34,8 @@ else:
 st.markdown(r"""
             ### Definition
             :blue-background[
-                $\forall\varepsilon > 0 \quad \exists N > 0: \quad$ $a_n\in (L-\varepsilon, L+\varepsilon) \quad$ for all $\quad n>N$]""")
+            $\forall\varepsilon > 0 \quad \exists N > 0: \quad$ $a_n\in (L-\varepsilon, L+\varepsilon) \quad$ for all $\quad n>N$]
+            """)
 
 st.markdown(rf"""
             Nepřítel zvolil :red-background[**$\varepsilon$ = {eps:.2f}**].

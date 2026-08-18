@@ -3,14 +3,10 @@ import streamlit as st
 
 from calc_package.core.functions import find_delta_for_limit, sample_clean
 from calc_package.plotting.functions_plotly import plot_epsilon_delta
+from calc_package.catalog import FUNCTIONS
 
 EPS_MAX = 1.0
-functions = {
-    "sin(x)/x": {"f": lambda x: np.sin(x)/x,
-                 "a": 0,
-                 "L": 1,
-                 "hole_x": 0},
-}
+functions = FUNCTIONS
 with st.sidebar:
     func_name = st.selectbox("Funkce", list(functions.keys()))
     eps = st.slider(r"$\varepsilon$", value=0.3, min_value=0.01,
@@ -19,6 +15,7 @@ with st.sidebar:
                        max_value=10.0, step=0.1)
 
 entry = functions[func_name]
+st.latex(entry["latex"])
 L = entry["L"]
 a = entry["a"]
 domain = (a - radius, a + radius)
