@@ -1,7 +1,7 @@
 import numpy as np
 import streamlit as st
 
-from calc_package.catalog import SEQUENCES
+from calc_package.catalog import ALL_SEQUENCES
 from calc_package.core.sequences import sample_sequence
 from calc_package.plotting.sequences_plotly import plot_sequence
 
@@ -10,7 +10,7 @@ st.markdown(
 )
 
 # --- controls ---
-sequences = SEQUENCES
+sequences = ALL_SEQUENCES
 seq_name = st.selectbox("Choose your sequence ", list(sequences.keys()))
 n_terms = st.slider("#of elements", min_value=1,
                     max_value=200, value=20, step=1)

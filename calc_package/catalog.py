@@ -2,7 +2,7 @@ import math as m
 
 import numpy as np
 
-SEQUENCES = {
+SEQUENCES_CONVERGENT = {
     "1/n": {"f": lambda n: 1/n,
             "L": 0,
             "latex": r"\frac{1}{n}"},
@@ -11,14 +11,23 @@ SEQUENCES = {
               "L": 3,
               "latex": r"3-\frac{1}{n}"},
 
+    "(-1)^n/n": {"f": lambda n: ((-1)**n)/n,
+                 "L": 0,
+                 "latex": r"\frac{(-1)^n}{n}"},
+
+}
+
+SEQUENCES_DIVERGENT = {
     "2^n": {"f": lambda n: 2**n,
-            "L": "inf",
+            "kind": "infty",
             "latex": r"2^n"},
 
     "sin(n)": {"f": lambda n: np.sin(n),
-               "L": "DNE",
+               "kind": "oscillating",
                "latex": r"\sin(n)"},
 }
+
+ALL_SEQUENCES = {**SEQUENCES_CONVERGENT, **SEQUENCES_DIVERGENT}
 
 FUNCTIONS = {
     "sin(x)/x": {"f": lambda x: np.sin(x)/x,
