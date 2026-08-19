@@ -1,7 +1,7 @@
 [server]
 runOnSave = true
 fileWatcherType = "auto"
-folderWatchList = ['C:\Users\novot\Documents\Python_projects\own\calculus\calc_package']
+folderWatchList = ['calc_package']
 
 [theme]
 font = "serif"

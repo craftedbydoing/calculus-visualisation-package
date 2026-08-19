@@ -1,20 +1,21 @@
-import numpy as np
 import math as m
 
+import numpy as np
+
 SEQUENCES = {
-    "1/n": {"f": lambda n: 1/n, 
+    "1/n": {"f": lambda n: 1/n,
             "L": 0,
             "latex": r"\frac{1}{n}"},
 
-    "3-1/n": {"f": lambda n: 3-1/n, 
+    "3-1/n": {"f": lambda n: 3-1/n,
               "L": 3,
               "latex": r"3-\frac{1}{n}"},
 
-    "2^n": {"f": lambda n: 2**n, 
+    "2^n": {"f": lambda n: 2**n,
             "L": "inf",
             "latex": r"2^n"},
 
-    "sin(n)": {"f": lambda n: np.sin(n), 
+    "sin(n)": {"f": lambda n: np.sin(n),
                "L": "DNE",
                "latex": r"\sin(n)"},
 }
@@ -35,7 +36,7 @@ DERIVATIVES = {
     "e^x": {"f": lambda x: np.exp(x),
             "a": 0,
             "latex": r"e^x"},
-            
+
     "sin(x)": {"f": lambda x: np.sin(x),
                "a": 0,
                "latex": r"\sin(x)"},
@@ -51,36 +52,36 @@ DERIVATIVES = {
 
 INTEGRATION = {
     "e^x": {"f": lambda x: np.exp(x),
-                "domain": (0, 3),
-                "latex": r"e^x"},
-    
+            "domain": (0, 3),
+            "latex": r"e^x"},
+
     "sin(x)": {"f": lambda x: np.sin(x),
-                "domain": (0, np.pi),
-                "latex": r"\sin(x)"},
+               "domain": (0, np.pi),
+               "latex": r"\sin(x)"},
 
     "1/x^2": {"f": lambda x: 1/(x**2),
-                "domain": (0.5, 5),
-                "latex": r"\frac{1}{x^2}"},
+              "domain": (0.5, 5),
+              "latex": r"\frac{1}{x^2}"},
 }
 
-TAYLOR = { 
-    "e^x": {"f": lambda x: np.exp(x), 
-            "deriv": lambda k, a: np.exp(a), 
+TAYLOR = {
+    "e^x": {"f": lambda x: np.exp(x),
+            "deriv": lambda k, a: np.exp(a),
             "a": 0,
             "latex": r"e^x"},
 
-    "sin(x)": {"f": lambda x: np.sin(x), 
-               "deriv": lambda k, a: np.sin(a + k*np.pi/2), 
+    "sin(x)": {"f": lambda x: np.sin(x),
+               "deriv": lambda k, a: np.sin(a + k*np.pi/2),
                "a": 0,
                "latex": r"\sin(x)"},
 
-    "1/(1-x)": {"f": lambda x: 1/(1-x), 
-                "deriv": lambda k, a: m.factorial(k) / (1-a)**(k+1), 
+    "1/(1-x)": {"f": lambda x: 1/(1-x),
+                "deriv": lambda k, a: m.factorial(k) / (1-a)**(k+1),
                 "a": 0,
                 "latex": r"\frac{1}{1-x}"},
 
-    "x^2": {"f": lambda x: x**2, 
-            "deriv": lambda k, a: (a**2 if k == 0 else (2*a if k == 1 else (2 if k == 2 else 0))), 
+    "x^2": {"f": lambda x: x**2,
+            "deriv": lambda k, a: (a**2 if k == 0 else (2*a if k == 1 else (2 if k == 2 else 0))),
             "a": 0,
             "latex": r"x^2"}
 }
